@@ -1,0 +1,157 @@
+1. Q define the term algorithm ? how it is diferent from program?
+An algorithm is a step-by-step procedure or set of rules that outlines how to solve a problem or perform a computation. It is a logical and systematic approach to problem-solving. Here are some points to define the term "algorithm":
+
+1. An algorithm is a sequence of instructions that takes input(s) and produces output(s) to solve a specific problem.
+2. Algorithms are language-independent and can be implemented in different programming languages.
+3. They are designed to be efficient and have a finite number of steps.
+4. Algorithms should have well-defined inputs, outputs, and a clear set of instructions to follow.
+5. Algorithms can be represented in various forms, such as pseudocode, flowcharts, or programming code.
+
+Differences between an algorithm and a program:
+
+1. An algorithm is a conceptual solution, a step-by-step plan, whereas a program is the implementation of the algorithm in a programming language.
+2. Algorithms are language-independent and focus on the logic and methodology of problem-solving, while programs are written in a specific programming language with syntax and structure requirements.
+3. Algorithms are more abstract and emphasize the overall approach to problem-solving, while programs are specific, detailed sets of instructions written in a programming language to execute a solution.
+4. Algorithms can be understood and implemented by different programmers in different programming languages, while programs are specific to a particular programming language and may require certain language-specific knowledge.
+
+In summary, algorithms are high-level abstractions that define a solution to a problem, independent of programming languages, while programs are the concrete implementations of algorithms in a specific programming language.
+------------------------------------------------------------------------------------------------------------
+
+2. Q- what are the benefits and limitations of flowcharts?
+
+Benefits of Flowcharts:
+
+1. Visual Representation: Flowcharts provide a visual representation of the sequential flow of activities or processes in a system. They help in understanding complex processes by breaking them down into smaller, more manageable steps.
+
+2. Easy to Understand: Flowcharts use standardized symbols and conventions, making them easy to understand and interpret by different stakeholders, including non-technical users. They provide a clear and concise overview of the process logic.
+
+3. Problem Solving and Analysis: Flowcharts are useful in analyzing and troubleshooting complex problems. They help in identifying bottlenecks, inefficiencies, and areas for improvement in a process or system.
+
+4. Communication Tool: Flowcharts serve as effective communication tools between different teams, departments, or individuals involved in a project. They facilitate better collaboration and understanding of the overall process.
+
+5. Documentation: Flowcharts act as documentation of a process or system. They provide a comprehensive and visual representation that can be referred to for future reference or during training sessions.
+
+Limitations of Flowcharts:
+
+1. Limited Detail: Flowcharts may not capture all the detailed steps or exceptional scenarios of a complex process. They provide a high-level overview and may not always account for every possible condition or variation.
+
+2. Redundancy: Flowcharts can become complex and cluttered if the process being represented is too detailed or if there are numerous decision points and branching paths. This can make them difficult to read and interpret.
+
+3. Lack of Standardization: Although there are standardized symbols and conventions for flowcharting, variations in their usage can still exist. This may lead to confusion and misinterpretation when different individuals or teams use different symbols or conventions.
+
+4. Sequential Focus: Flowcharts primarily focus on sequential processes and may not be suitable for representing parallel or concurrent activities. Representing complex processes involving multiple parallel paths can be challenging in a flowchart.
+
+5. Technical Limitations: Flowcharting may not be the best approach for representing processes or systems with complex calculations, mathematical operations, or complex data structures. Other tools, such as pseudocode or programming languages, may be more suitable in such cases.
+
+Overall, while flowcharts are a valuable tool for visualizing and understanding processes, they have certain limitations in capturing all the intricacies of complex systems or providing detailed analysis in certain contexts. They should be used in conjunction with other techniques and tools where appropriate.
+----------------------------------------------------------------------------------------------------------
+
+QUESTION PAPER
+(c)
+
+5.
+
+(a) Explain any two of the following:
+
+(b) Why the names of variables, functions and classes should be chosen carefully in a Project
+Development? Explain.
+Give two methods for testing a program, and discuss when each should be used. Find suitable
+black-box test data any one of the following:
+
+(ii)
+
+A function that returns the smallest of its three parameters, which are floating- point numbers.
+A function that returns the square root of a floating-point number.
+
+fi) Stubs and Drivers (ii) Refinement (iii) Requirement Specification
+
+4.
+
+(b) Compare the linear search and binary search iterative algorithms to search an element in an array of
+
+(c)
+
+(a)
+
+worst and average cases.
+Determine the time-complexity of the algorithm to sort the given elements. Also discuss the best,
+Quick sort (use the first element as Pivot)
+Insertion Sort (remove duplicates during the sorting process).
+
+N elements and also determine the time complexities to search the element in each case.
+
+N elements:
+Write an algorithm for any one of the following sorting methods applied to sort an unsorted array of
+
+(ii)
+(i)
+
+elements.
+Write an algorithm and a program to remove the duplicate values from an ordered array of N
+
+(c) Our coins come suppose in denominations of 1 cent, 5 cents, 10 cents, 20 cents,50 cents and 1
+dollar. Assuming that there are unlimited number of coins, how would you devise a coin-change
+
+example, for 46 cents you need 4 coins: two 20-cent coins, one 5-cent coin, and one 1-cent coin.
+algorithm to compute the minimum number of coins required to make up a particular amount? For
+
+2.(a) Write a program to evaluate the function sin(x) as defined by the series expansion,
+
+(b) Write a program to convert a given decimal number into its binary, octal and hexadecimal
+
+(c) Design and write an algorithm to find the sum of the digits of a given integer. Also write the pseudo
+code and draw the flow chart.
+
+pseudo code and draw the flow chart.
+
+function.
+
+3. (a) Write an algorithm to find the square root of a given number to an exact precision. Also write the
+
+Write a program to find all the prime numbers lying between 100 and 200 using user-defined
+
+c)
+
+(b)
+
+equivalents.
+
+sin (x) = x/1! - x3/3! + x5/5! - x7/7! + ---- upto n terms
+
+and best-case time complexities using suitable examples.
+
+(ii) long int fib(int n)
+
+if (n <= 1) return n;
+else
+return (fib(n-1) + fib(n-2));
+
+-
+
+What do you mean by Time complexity of an algorithm? Discuss the worst-case, average-case
+
+Determine the Time-complexity for the following piece of codes:
+int i, j, k = 0;
+for (i = n /2; i <= n; i++) {
+for (j = 2; j <= n; j = j * 2) {
+k=k+ n/2;
+
+1 (a) Discuss the essential and desirable features of an algorithm. Imagine a classroom of 100
+without knowing to whom you gave it. Devise an efficient algorithm to carry out this task
+and also find its Time Complexity. Is a search of O(log n) possible?
+
+students in which you gave your pen to one person. You have to find that pen
+
+Time: 3 Hours
+
+. Attempt ALL questions by selecting any TWO parts. All questions carry equal marks.
+. Write your Roll No. on the top immediately on receipt of the question paper.
+
+Code: CSC13
+
+MCA (SEM-I) Examinations, 2022-23
+Algorithmics and Program Design
+
+Max Marks: 60
+
+22mcA019
