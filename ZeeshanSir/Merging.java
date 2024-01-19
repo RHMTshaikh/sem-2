@@ -1,3 +1,4 @@
+//adding to check
 public class Merging {
     public static void main(String[] args) {
         int[] a ={15,18,42,51};
