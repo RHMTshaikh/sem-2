@@ -30,7 +30,7 @@ public class MyArray {
     int getElement(int index){
         return array[index];
     }
-    
+
     public void display(){
         for (int i=0; i < size; i++) {
             System.out.print(array[i]+" ");
@@ -125,13 +125,35 @@ public class MyArray {
         }
         return -1;
     }
+
+    void storeOddThenEven(int n){//1 3 5 7 2 4 6
+        if(n>0){
+            capacity =n;
+            size =n;
+            array = new int[n];
+            int lastIndexOfOdd = (n-1)/2;
+            for (int i = 0; i <= lastIndexOfOdd; i++) {//odd
+                array[i]=2*i+1;
+            }
+            int numberOfLeftPositions = n-lastIndexOfOdd-1;
+            for (int i = 0; i < numberOfLeftPositions ; i++) {//even
+                array[i+ lastIndexOfOdd+1]=2*(i+1);  
+            }
+        }else System.out.println("n must be greater than 0");
+    }
     
+}
+
+class TestMyArray{    
     public static void main(String[] args) {
         int[] arr = {6,5,4,3,2,1};
-        MyArray m = new MyArray(arr);
-        System.out.println(m.isEmpty());
-        System.out.println(m.size);
-        System.out.println(m.capacity);
+        MyArray m = new MyArray();
+        m.storeOddThenEven(9);
+        m.display();
+        // System.out.println(m.isEmpty());
+        // System.out.println(m.size);
+        // System.out.println(m.capacity);
 
     } 
+
 }
