@@ -1,7 +1,4 @@
-import java.util.Random;
-
 public class MyArray {
-    
     int[] array;
     int size=0;
     int capacity;
@@ -99,20 +96,6 @@ public class MyArray {
             System.out.println("invalid index or capacity full");
         }
     }
-
-    public int getRandomElement(){
-        Random rdm = new Random();
-        int i = rdm.nextInt(size);
-        return array[i];
-    }
-
-    public int popRandomElement(){
-        Random rdm = new Random();
-        int k = rdm.nextInt(size);
-        int val = array[k];
-        delete(k);
-        return val;
-    }
     
     public int indexOf(int val){
         if(size > 0){
@@ -141,37 +124,45 @@ public class MyArray {
             }
         }else System.out.println("n must be greater than 0");
     }
-    
-    void storeEvenTwice(int n){
+    void storeEvenTwice(int n){//1 2 2 3 4 4 5 6 6 7 8 8 9
         if(n>0){
             capacity =3*n/2;
-            size =capacity;
             array = new int[capacity];
-            for (int i = 0; 3*i < capacity; i++) {///odd
-                array[3*i] = 2*i+1;
-            }
-            for (int i = 0; 3*i+2 < capacity; i++) {//even
-                array[3*i+1] = 2*(i+1);
-                array[3*i+2] = 2*(i+1);
+            for (int i = 0; i < n; i++) {
+                if(i%2==0){
+                    insert(i+1, size);
+                } else{
+                    insert(i+1, size);
+                    insert(i+1, size);
+                }
             }
         }else System.out.println("n must be greater than 0");
+    }
+
+    void deleteDuplicate(int n){
+        int m;
+        if(n%2==0){
+            m = 3*n/2-1;
+        }else{
+            m = 3*n/2-2;
+        }
+        for (int i = m; i > 1; i-=3) {
+            delete(i);
+        }
     }
     
 }
 
 class TestMyArray{    
     public static void main(String[] args) {
-        int[] arr = {6,5,4,3,2,1};
-        MyArray m = new MyArray();
-        MyArray n = new MyArray();
-        m.storeOddThenEven(9);
-        m.display();
-        n.storeEvenTwice(9);
-        n.display();
-        // System.out.println(m.isEmpty());
-        // System.out.println(m.size);
-        // System.out.println(m.capacity);
+        MyArray twiceEven = new MyArray();
+        MyArray oddThenEven = new MyArray();
+        twiceEven.storeEvenTwice(9);       //1 2 2 3 4 4 5 6 6 7 8 8 9 
+        oddThenEven.storeOddThenEven(9);   //1 3 5 7 9 2 4 6 8
+        twiceEven.display();   
+        oddThenEven.display();   
+        twiceEven.deleteDuplicate(9);      //1 2 3 4 5 6 7 8 9
+        twiceEven.display();
 
-    } 
-
+    }
 }
