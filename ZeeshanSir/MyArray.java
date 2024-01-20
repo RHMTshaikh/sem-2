@@ -89,7 +89,7 @@ public class MyArray {
     }
 
     public void insert(int val, int index){
-        if(index < size && size < capacity){
+        if((index <= size && size < capacity)){
             for (int i = size-1; i >= index; i--) {
                 array[i+1] = array[i];
             }
@@ -129,8 +129,8 @@ public class MyArray {
     void storeOddThenEven(int n){//1 3 5 7 2 4 6
         if(n>0){
             capacity =n;
-            size =n;
-            array = new int[n];
+            size =capacity;
+            array = new int[capacity];
             int lastIndexOfOdd = (n-1)/2;
             for (int i = 0; i <= lastIndexOfOdd; i++) {//odd
                 array[i]=2*i+1;
@@ -142,14 +142,32 @@ public class MyArray {
         }else System.out.println("n must be greater than 0");
     }
     
+    void storeEvenTwice(int n){
+        if(n>0){
+            capacity =3*n/2;
+            size =capacity;
+            array = new int[capacity];
+            for (int i = 0; 3*i < capacity; i++) {///odd
+                array[3*i] = 2*i+1;
+            }
+            for (int i = 0; 3*i+2 < capacity; i++) {//even
+                array[3*i+1] = 2*(i+1);
+                array[3*i+2] = 2*(i+1);
+            }
+        }else System.out.println("n must be greater than 0");
+    }
+    
 }
 
 class TestMyArray{    
     public static void main(String[] args) {
         int[] arr = {6,5,4,3,2,1};
         MyArray m = new MyArray();
+        MyArray n = new MyArray();
         m.storeOddThenEven(9);
         m.display();
+        n.storeEvenTwice(9);
+        n.display();
         // System.out.println(m.isEmpty());
         // System.out.println(m.size);
         // System.out.println(m.capacity);
