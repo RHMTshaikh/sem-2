@@ -19,6 +19,18 @@ public class MyArray {
         size=capacity;
     }
 
+    int getSize(){
+        return size;
+    }
+
+    int length(){
+        return capacity;
+    }
+
+    int getElement(int index){
+        return array[index];
+    }
+    
     public void display(){
         for (int i=0; i < size; i++) {
             System.out.print(array[i]+" ");
