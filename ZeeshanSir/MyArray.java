@@ -3,7 +3,7 @@ import java.util.Random;
 public class MyArray {
     
     int[] array;
-    int len=0;
+    int size=0;
     int capacity;
 
     MyArray(){}
@@ -16,41 +16,41 @@ public class MyArray {
     MyArray(int[] array){
         this.array=array;
         capacity = array.length;
-        len=capacity;
+        size=capacity;
     }
 
     public void display(){
-        for (int i=0; i < len; i++) {
+        for (int i=0; i < size; i++) {
             System.out.print(array[i]+" ");
         }System.out.println();
     }
     
     public void add(int val){
-        if(len < capacity){
-            array[len]=val;
-            len++;
+        if(size < capacity){
+            array[size]=val;
+            size++;
         } else{
             System.out.println("full");
         }
     }
 
     public void delete(int index){
-        if(len > 0 && index < len){
-            for(int i = index; i < len-1; i++) {
+        if(size > 0 && index < size){
+            for(int i = index; i < size-1; i++) {
                 array[i] = array[i+1];
             }
-            len--;
+            size--;
         }else{
             System.out.println("invalid index or Array is empty");
         }
     }
 
     public void remove(int val){
-        if(len > 0){
-            for(int i = 0; i < len; i++) {
+        if(size > 0){
+            for(int i = 0; i < size; i++) {
                 if(array[i]==val){
                     this.delete(i);
-                    len--;
+                    size--;
                     break;
                 }
             }
@@ -59,8 +59,8 @@ public class MyArray {
         }
     }
     public void removeAll(int val){
-        if(len > 0){
-            for(int i = 0; i < len; i++) {
+        if(size > 0){
+            for(int i = 0; i < size; i++) {
                 if(array[i]==val){
                     delete(i);
                     i--;
@@ -72,17 +72,17 @@ public class MyArray {
     }
     
     public boolean isEmpty(){
-        if(len==0) return true;
+        if(size==0) return true;
         else return false;
     }
 
     public void insert(int val, int index){
-        if(index < len && len < capacity){
-            for (int i = len-1; i >= index; i--) {
+        if(index < size && size < capacity){
+            for (int i = size-1; i >= index; i--) {
                 array[i+1] = array[i];
             }
             array[index]=val;
-            len++;
+            size++;
         }else{
             System.out.println("invalid index or capacity full");
         }
@@ -90,22 +90,22 @@ public class MyArray {
 
     public int getRandomElement(){
         Random rdm = new Random();
-        int i = rdm.nextInt(len);
+        int i = rdm.nextInt(size);
         return array[i];
     }
 
     public int popRandomElement(){
         Random rdm = new Random();
-        int k = rdm.nextInt(len);
+        int k = rdm.nextInt(size);
         int val = array[k];
         delete(k);
         return val;
     }
     
     public int indexOf(int val){
-        if(len > 0){
-            System.out.println(len);
-            for(int i = 0; i < len; i++) {
+        if(size > 0){
+            System.out.println(size);
+            for(int i = 0; i < size; i++) {
                 if(array[i]==val) return i;
             }
         } else{
@@ -118,7 +118,7 @@ public class MyArray {
         int[] arr = {6,5,4,3,2,1};
         MyArray m = new MyArray(arr);
         System.out.println(m.isEmpty());
-        System.out.println(m.len);
+        System.out.println(m.size);
         System.out.println(m.capacity);
 
     } 
