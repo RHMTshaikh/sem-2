@@ -112,18 +112,15 @@ public class MyArray {
     void storeOddThenEven(int n){//1 3 5 7 2 4 6
         if(n>0){
             capacity =n;
-            size =capacity;
             array = new int[capacity];
             int lastIndexOfOdd = (n-1)/2;
-            for (int i = 0; i <= lastIndexOfOdd; i++) {//odd
-                array[i]=2*i+1;
-            }
-            int numberOfLeftPositions = n-lastIndexOfOdd-1;
-            for (int i = 0; i < numberOfLeftPositions ; i++) {//even
-                array[i+ lastIndexOfOdd+1]=2*(i+1);  
+            int largestOdd = ((n-1)/2)*2+1;
+            for (int i = 0; i < n; i++) {
+                insert(2*i+1-((largestOdd)*(i/(lastIndexOfOdd+1))),i);
             }
         }else System.out.println("n must be greater than 0");
     }
+
     void storeEvenTwice(int n){//1 2 2 3 4 4 5 6 6 7 8 8 9
         if(n>0){
             capacity =3*n/2;
@@ -158,7 +155,7 @@ class TestMyArray{
         MyArray twiceEven = new MyArray();
         MyArray oddThenEven = new MyArray();
         twiceEven.storeEvenTwice(9);       //1 2 2 3 4 4 5 6 6 7 8 8 9 
-        oddThenEven.storeOddThenEven(9);   //1 3 5 7 9 2 4 6 8
+        oddThenEven.storeOddThenEven(19);   //1 3 5 7 9 2 4 6 8
         twiceEven.display();   
         oddThenEven.display();   
         twiceEven.deleteDuplicate(9);      //1 2 3 4 5 6 7 8 9
