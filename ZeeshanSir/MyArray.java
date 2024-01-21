@@ -29,9 +29,12 @@ public class MyArray {
     }
 
     public void display(){
-        for (int i=0; i < size; i++) {
-            System.out.print(array[i]+" ");
-        }System.out.println();
+        if(size==0) System.out.println("array is empty");
+        else {
+            for (int i=0; i < size; i++) {
+                System.out.print(array[i]+" ");
+            }System.out.println();
+        }
     }
     
     public void add(int val){
@@ -86,14 +89,16 @@ public class MyArray {
     }
 
     public void insert(int val, int index){
-        if((index <= size && size < capacity)){
-            for (int i = size-1; i >= index; i--) {
-                array[i+1] = array[i];
-            }
-            array[index]=val;
-            size++;
+        if(size < capacity){
+            if(!(index < 0 || index > size)){
+                for (int i = size-1; i >= index; i--) {
+                    array[i+1] = array[i];
+                }
+                array[index]=val;
+                size++;
+            } else System.out.println("invalid index");
         }else{
-            System.out.println("invalid index or capacity full");
+            System.out.println("array is full");
         }
     }
     
@@ -113,10 +118,17 @@ public class MyArray {
         if(n>0){
             capacity =n;
             array = new int[capacity];
-            int lastIndexOfOdd = (n-1)/2;
-            int largestOdd = ((n-1)/2)*2+1;
+            // int lastIndexOfOdd = (n-1)/2;
+            // int largestOdd = ((n-1)/2)*2+1;
+            // for (int i = 0; i < n; i++) {
+            //     insert(2*i+1-((largestOdd)*(i/(lastIndexOfOdd+1))),i);
+            // }
             for (int i = 0; i < n; i++) {
-                insert(2*i+1-((largestOdd)*(i/(lastIndexOfOdd+1))),i);
+                if(i%2==0){
+                    insert(i+1, size/2);
+                } else{
+                    insert(i+1, size);
+                }
             }
         }else System.out.println("n must be greater than 0");
     }
@@ -160,6 +172,7 @@ class TestMyArray{
         oddThenEven.display();   
         twiceEven.deleteDuplicate(9);      //1 2 3 4 5 6 7 8 9
         twiceEven.display();
-
+        twiceEven.insert(99,8);
+        twiceEven.display();
     }
 }
