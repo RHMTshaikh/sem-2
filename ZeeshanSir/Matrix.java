@@ -27,6 +27,16 @@ public class Matrix{
             }
         }
     }
+    Matrix(int r, int c, int constant){
+        rows=r;
+        columns = c;
+        matrix = new int [rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                matrix[i][j] = constant;
+            }
+        }
+    }
 
     void transpose(){
         for (int i = 0; i < rows-1; i++) {
@@ -42,11 +52,12 @@ public class Matrix{
         int m1_row = m1.rows;
         int m1_col = m1.columns;
 
-        Matrix product =  new Matrix(rows,m1_col);
+        Matrix product =  new Matrix(rows,m1_col,0);
 
         if (columns == m1_row){
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < m1_col; j++) {
+                    product.matrix[i][j]=0; 
                     for (int k =0; k < columns; k++){
                         product.matrix[i][j] += matrix[i][k] * matrix1[k][j];
                     }
@@ -78,5 +89,6 @@ public class Matrix{
         m1.display();
         System.out.println("Multiplication of matrices.");
         m.multiply(m1).display();
+        System.out.println(3*5/3);
     }
 }
