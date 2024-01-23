@@ -172,7 +172,5 @@ class TestMyArray{
         oddThenEven.display();   
         twiceEven.deleteDuplicate(9);      //1 2 3 4 5 6 7 8 9
         twiceEven.display();
-        twiceEven.insert(99,8);
-        twiceEven.display();
     }
 }
