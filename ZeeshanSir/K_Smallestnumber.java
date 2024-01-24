@@ -20,8 +20,8 @@ public class K_Smallestnumber {
                 arr[i]=arr[j];
                 arr[j]=t;
                 
-                i++;
-                j--;
+                //i++;
+                //j--; //the new element came by swaping may be equal to the partitioning value, and it was ignoring it and was moving on further 
                 while (i<j && arr[i]<x) {
                     i++;
                 }
