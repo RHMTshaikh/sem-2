@@ -2,14 +2,14 @@ import java.util.Random;
 //adding a comment to check
 
 public class Matrix{
-    int[][] matrix;
+    double[][] matrix;
     int rows;
     int columns;
     Matrix(int n){
         rows=n;
         columns = n;
         Random rdm = new Random();
-        matrix = new int [rows][columns];
+        matrix = new double [rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 matrix[i][j] = rdm.nextInt(9)+1;
@@ -20,7 +20,7 @@ public class Matrix{
         rows=r;
         columns = c;
         Random rdm = new Random();
-        matrix = new int [rows][columns];
+        matrix = new double [rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 matrix[i][j] = rdm.nextInt(9)+1;
@@ -30,7 +30,7 @@ public class Matrix{
     Matrix(int r, int c, int constant){
         rows=r;
         columns = c;
-        matrix = new int [rows][columns];
+        matrix = new double[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 matrix[i][j] = constant;
@@ -41,14 +41,14 @@ public class Matrix{
     void transpose(){
         for (int i = 0; i < rows-1; i++) {
             for (int j = i+1; j < columns; j++) {
-                int temp = matrix[i][j];
+                double temp = matrix[i][j];
                 matrix[i][j] = matrix[j][i];
                 matrix[j][i] = temp;
             }
         }
     }
     Matrix multiply(Matrix m1){
-        int[][] matrix1 = m1.matrix;
+        double[][] matrix1 = m1.matrix;
         int m1_row = m1.rows;
         int m1_col = m1.columns;
 
@@ -79,9 +79,52 @@ public class Matrix{
         }
 
     }
+
+    double determinant(){
+        Matrix UTM_matrix =  new Matrix(rows,columns,0);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < rows; j++) {
+                UTM_matrix.matrix[i][j] = matrix[i][j];
+            }
+        }
+        for (int i = 0; i < rows-1; i++) {
+            double x = UTM_matrix.matrix[i][i];
+            for (int j = i+1; j < rows; j++) {
+                double y = UTM_matrix.matrix[j][i];
+                for (int k = 0; k < rows; k++) {
+                    UTM_matrix.matrix[j][k] = UTM_matrix.matrix[j][k]-UTM_matrix.matrix[i][k]*y/x;
+                }
+            }
+        }
+        double d =1;
+        for (int i = 0; i < matrix.length; i++) {
+            d *= UTM_matrix.matrix[i][i];
+        }
+        return d;
+    }
+    void sumOFRows(){
+        for (int i = 0; i < rows; i++) {
+            double sum = 0;
+            for (int j = 0; j < columns; j++) {
+                sum += matrix[i][j];
+            }
+            System.out.print(sum+" ");
+        }
+        System.out.println();
+    }
+    void sumOFColumns(){
+        for (int i = 0; i < columns; i++) {
+            double sum = 0;
+            for (int j = 0; j < rows; j++) {
+                sum += matrix[j][i];
+            }
+            System.out.print(sum+" ");
+        }
+        System.out.println();
+    }
     public static void main(String[] args) {
-        Matrix m = new Matrix(4);
-        Matrix m1 = new Matrix(4);
+        Matrix m = new Matrix(3);
+        Matrix m1 = new Matrix(3);
 
         System.out.println("matrix1");
         m.display();
@@ -89,6 +132,10 @@ public class Matrix{
         m1.display();
         System.out.println("Multiplication of matrices.");
         m.multiply(m1).display();
-        System.out.println(3*5/3);
+        System.out.println("determinant");
+        System.out.println(m.determinant());
+        
+        System.out.println("sum");
+        m.sumOFColumns();
     }
 }
