@@ -38,6 +38,8 @@ public class Matrix{
         }
     }
 
+    
+
     void transpose(){
         for (int i = 0; i < rows-1; i++) {
             for (int j = i+1; j < columns; j++) {
@@ -69,8 +71,6 @@ public class Matrix{
         }
         return product;
     }
-    
-    
     void display(){
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -78,10 +78,9 @@ public class Matrix{
             }System.out.println();
         }
 
-    }
-
+}
     double determinant(){
-        Matrix UTM_matrix =  new Matrix(rows,columns,0);
+        Matrix UTM_matrix =  new Matrix(rows,columns,0);//made this to dont alter the original matrix
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < rows; j++) {
                 UTM_matrix.matrix[i][j] = matrix[i][j];
