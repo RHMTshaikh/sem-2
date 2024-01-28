@@ -38,7 +38,7 @@ public class Matrix{
         }
     }
 
-    
+    int[][] inverse()
 
     void transpose(){
         for (int i = 0; i < rows-1; i++) {
