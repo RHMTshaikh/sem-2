@@ -27,10 +27,16 @@ child(ll,ee).
 
 child(nn,mm).
 
-couple(aa,bb).
-couple(cc,ff).
-couple(gg,ee).
-couple(kk,mm).
+child(pp,hh).
+
+marriedTo(aa,bb).
+marriedTo(cc,ff).
+marriedTo(gg,ee).
+marriedTo(kk,mm).
+marriedTo(oo,hh).
+
+couple(X,Y):-marriedTo(Y,X).
+couple(X,Y):-marriedTo(X,Y).
 
 husband(H,W):-couple(H,W),male(H).
 husband(H,W):-couple(W,H),male(H).
@@ -61,4 +67,6 @@ uncle(A,B):-male(A),parent(X,B),sibling(A,X).
 meternal_aunt(A,B):-female(A),mother(X,B),sibling(A,X).
 meternal_uncle(A,B):-male(A),mother(X,B),sibling(A,X).
 
-bhabhi(B,X):-female(B),
+bhabhi(B,X):-husband(H,B),brother(H,X).
+dewar(D,X):-husband(H,X),brother(D,H).
+sasur(S,X):-father(S,Y),couple(Y,X).
