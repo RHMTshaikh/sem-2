@@ -1,11 +1,14 @@
 import java.util.Random;
+import java.util.Scanner;
 //adding a comment to check
 
-public class Matrix{
+public class Matrix {
     double[][] matrix;
     int rows;
     int columns;
-    Matrix(int n){
+
+    Matrix(int n) throws Exception {
+        if(n <1) throw new Exception("dimension must be greater than zero");
         rows=n;
         columns = n;
         Random rdm = new Random();
@@ -16,7 +19,8 @@ public class Matrix{
             }
         }
     }
-    Matrix(int r, int c){
+    Matrix(int r, int c) throws Exception {
+        if(r < 1 || c <1) throw new Exception("dimension must be greater than zero");
         rows=r;
         columns = c;
         Random rdm = new Random();
@@ -27,7 +31,8 @@ public class Matrix{
             }
         }
     }
-    Matrix(int r, int c, int constant){
+    Matrix(int r, int c, int constant) throws Exception {
+        if(r < 1 || c <1) throw new Exception("dimension must be greater than zero");
         rows=r;
         columns = c;
         matrix = new double[rows][columns];
@@ -37,10 +42,24 @@ public class Matrix{
             }
         }
     }
-
-    int[][] inverse()
-
-    void transpose(){
+    void read(){
+        Scanner scn = new Scanner(System.in);
+        System.out.println("input "+ rows*columns + " numbers in the terminal");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                matrix[i][j] = scn.nextDouble();
+            }
+        }
+    }
+    void display(){
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                System.out.print(matrix[i][j]+" ");
+            }System.out.println();
+        }
+        
+    }
+    void transpose() {
         for (int i = 0; i < rows-1; i++) {
             for (int j = i+1; j < columns; j++) {
                 double temp = matrix[i][j];
@@ -49,37 +68,43 @@ public class Matrix{
             }
         }
     }
-    Matrix multiply(Matrix m1){
-        double[][] matrix1 = m1.matrix;
-        int m1_row = m1.rows;
-        int m1_col = m1.columns;
+    Matrix add(Matrix m2) throws Exception {
+        if(rows != m2.rows || columns != m2.columns) throw new Exception("dimensions are not equal!");
+        Matrix sum = new Matrix(rows,columns);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                sum.matrix[i][j] = matrix[i][j] + m2.matrix[i][j];
+            }
+        }
+        return sum;
+    }
+    Matrix subtract(Matrix m2) throws Exception {
+        if(rows != m2.rows || columns != m2.columns) throw new Exception("dimensions are not equal!");
+        Matrix diffMatrix = new Matrix(rows,columns);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                diffMatrix.matrix[i][j] = matrix[i][j] - m2.matrix[i][j];
+            }
+        }
+        return diffMatrix;
+    }
+    Matrix multiply(Matrix m2) throws Exception {
+        if(columns != m2.rows) throw new Exception("Product not Possible! Invalid Dimensions");
 
-        Matrix product =  new Matrix(rows,m1_col,0);
-
-        if (columns == m1_row){
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < m1_col; j++) {
-                    product.matrix[i][j]=0; 
-                    for (int k =0; k < columns; k++){
-                        product.matrix[i][j] += matrix[i][k] * matrix1[k][j];
-                    }
+        int m2_col = m2.columns;
+        Matrix product =  new Matrix(rows,m2_col,0);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < m2_col; j++) {
+                for (int k =0; k < columns; k++){
+                    product.matrix[i][j] += matrix[i][k] * m2.matrix[k][j];
                 }
             }
         }
-        else{
-            System.out.println("Product not Possible! \nInvalid Dimensions");
-        }
         return product;
     }
-    void display(){
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                System.out.print(matrix[i][j]+" ");
-            }System.out.println();
-        }
+    double determinant() throws Exception{
+        if (columns != rows) throw new  Exception("not square matrix");
 
-}
-    double determinant(){
         Matrix UTM_matrix =  new Matrix(rows,columns,0);//made this to dont alter the original matrix
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < rows; j++) {
@@ -101,7 +126,57 @@ public class Matrix{
         }
         return d;
     }
-    void sumOFRows(){
+    Matrix inverse() throws Exception{
+        if (columns!=rows) throw new Exception("inverse: not squar matrix");
+        if (this.determinant() == 0.0) throw new Exception("inverse: singular matrix");
+        
+        Matrix duplicate = new Matrix(rows);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < rows; j++) {
+                duplicate.matrix[i][j] = matrix[i][j];
+            }  
+        }
+        Matrix invers = new Matrix(rows);
+        //converting to unit matrix
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < rows; j++) {
+                if(i!=j) invers.matrix[i][j] =0;
+                else invers.matrix[i][j] = 1;
+            }  
+        }
+        //making lower part 0
+        for (int i = 0; i < rows-1; i++) {
+            double x = duplicate.matrix[i][i];
+            for (int j = i+1; j < rows; j++) {
+                double y = duplicate.matrix[j][i];
+                for (int k = 0; k < rows; k++) {
+                    duplicate.matrix[j][k] = duplicate.matrix[j][k]-duplicate.matrix[i][k]*y/x;
+                    invers.matrix[j][k] = invers.matrix[j][k]-invers.matrix[i][k]*y/x;
+                }
+            }
+        }
+        //making upper part 0
+        for (int i = rows-1; i > 0; i--) {
+            double x = duplicate.matrix[i][i];
+            for (int j = i-1; j >= 0; j--) {
+                double y = duplicate.matrix[j][i];
+                for (int k = rows-1; k >= 0; k--) {
+                    duplicate.matrix[j][k] -= duplicate.matrix[i][k]*y/x;
+                    invers.matrix[j][k] -= invers.matrix[i][k]*y/x;
+                }
+            }
+        }
+        //making digonal 1
+        for (int i = 0; i < rows; i++) {
+            double x = duplicate.matrix[i][i];
+            for (int j = 0; j < rows; j++) {
+                duplicate.matrix[i][j] = duplicate.matrix[i][j]/x;
+                invers.matrix[i][j] = invers.matrix[i][j]/x;
+            }
+        }
+        return invers;
+    }
+    void sumOFRows() {
         for (int i = 0; i < rows; i++) {
             double sum = 0;
             for (int j = 0; j < columns; j++) {
@@ -111,7 +186,7 @@ public class Matrix{
         }
         System.out.println();
     }
-    void sumOFColumns(){
+    void sumOFColumns() {
         for (int i = 0; i < columns; i++) {
             double sum = 0;
             for (int j = 0; j < rows; j++) {
@@ -121,20 +196,41 @@ public class Matrix{
         }
         System.out.println();
     }
-    public static void main(String[] args) {
-        Matrix m = new Matrix(3);
-        Matrix m1 = new Matrix(3);
 
-        System.out.println("matrix1");
-        m.display();
-        System.out.println("matrix2");
-        m1.display();
-        System.out.println("Multiplication of matrices.");
-        m.multiply(m1).display();
-        System.out.println("determinant");
-        System.out.println(m.determinant());
-        
-        System.out.println("sum");
-        m.sumOFColumns();
+    public static void main(String[] args) {
+        try {
+            Matrix m = new Matrix(3);
+            Matrix m1 = new Matrix(3);
+            System.out.println("matrix1");
+            m.display();
+            System.out.println("matrix2");
+            m1.display();
+
+            System.out.println("Multiplication of matrices.");
+            m.multiply(m1).display();
+
+            System.out.println("determinant");
+            System.out.println(m.determinant());
+            
+            System.out.println("sum of rows");
+            m.sumOFRows();
+
+            System.out.println("sum of columns");
+            m.sumOFColumns();
+
+            System.out.println("determinant");
+            m.determinant();
+
+            System.out.println("inverse");
+            m.inverse().display();
+
+            m.read();
+            m.display();
+            m.read();
+            m.display();
+ 
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
