@@ -197,7 +197,7 @@ public class Matrix {
         System.out.println();
     }
     //in codespace 
-    public static void main(String[] args) {
+public static void main(String[] args) {
         try {
             Matrix m = new Matrix(3);
             Matrix m1 = new Matrix(3);
