@@ -50,8 +50,15 @@ parent(P,C):-couple(P,X),child(C,X).
 father(F,C):-parent(F,C),male(F).
 mother(M,C):-parent(M,C),female(M).
 
+sibling(A,B):- parent(X,A),child(B,X),A\=B.
+
 brother(B,X):-male(B),sibling(B,X).
 sister(S,X):-female(S),sibling(S,X).
+
+cousin(X,Y):-father(A,X),father(B,Y),sibling(A,B).
+cousin(X,Y):-mother(A,X),mother(B,Y),sibling(A,B).
+cousin(X,Y):-father(A,X),mother(B,Y),sibling(A,B).
+cousin(X,Y):-mother(A,X),father(B,Y),sibling(A,B).
 
 grand_father(F,C):-parent(X,C),parent(F,X),male(F).
 grand_mother(M,C):-parent(X,C),parent(M,X),female(M).
@@ -59,7 +66,6 @@ grand_mother(M,C):-parent(X,C),parent(M,X),female(M).
 ancesstor(A,D):-parent(A,D).
 ancesstor(A,D):-parent(A,X),ancesstor(X,D).
 
-sibling(A,B):- parent(X,A),child(B,X),A\=B.
 
 aunt(A,B):-female(A),parent(X,B),sibling(A,X).
 uncle(A,B):-male(A),parent(X,B),sibling(A,X).
