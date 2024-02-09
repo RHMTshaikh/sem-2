@@ -1,3 +1,5 @@
+package ZeeshanSir;
+
 public class MyArray {
     int[] array;
     int size=0;

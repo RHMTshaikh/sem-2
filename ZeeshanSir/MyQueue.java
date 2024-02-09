@@ -1,3 +1,5 @@
+package ZeeshanSir;
+
 public class MyQueue {
     int len=0;
     Node frontNode, rareNode;

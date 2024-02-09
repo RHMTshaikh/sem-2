@@ -1,3 +1,5 @@
+package ZeeshanSir;
+
 public class ReverseNumber {
     public static void main(String[] args) {
         System.out.println(reverseNumber(9852));

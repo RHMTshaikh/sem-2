@@ -1,3 +1,5 @@
+package ZeeshanSir;
+
 public class Partitioning {
     public static void main(String[] args) {
         // int[] arr = {2,1,9,4,6,8,3,5,7,0};

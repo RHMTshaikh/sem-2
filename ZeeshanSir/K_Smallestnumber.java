@@ -1,3 +1,5 @@
+package ZeeshanSir;
+
 public class K_Smallestnumber {
     public static void main(String[] args) {
         int nums[] = {0,1,8, 0,2, 3, 4};

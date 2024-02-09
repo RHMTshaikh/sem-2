@@ -1,3 +1,5 @@
+package ZeeshanSir;
+
 import java.util.Random;
 import java.util.Scanner;
 //adding a comment to check

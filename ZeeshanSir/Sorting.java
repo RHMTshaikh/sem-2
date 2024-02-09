@@ -1,3 +1,5 @@
+package ZeeshanSir;
+
 public class Sorting {
     public static void main(String[] args) {
         int[] array = {9,0,0,8, 5,4,4,4,4,9,9,9,2,2,2,4,8,3,-17,9,3,8,48,2,4, 12, 7,0};

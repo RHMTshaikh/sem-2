@@ -1,3 +1,5 @@
+package ZeeshanSir;
+
 public class PrimeNumber {
     public static void main(String[] args) {
         int from = 100, upto = 203; // number to find the prime factors of

@@ -1,3 +1,5 @@
+package ZeeshanSir;
+
 class Zeeshan{
     static int reverseDigitIter(int a){
         int b=0;

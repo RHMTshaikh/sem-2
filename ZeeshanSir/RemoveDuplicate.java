@@ -1,3 +1,5 @@
+package ZeeshanSir;
+
 public class RemoveDuplicate {
     public static void main(String[] args) {
         int arr1[] = {0,1,2,2,2,3,3,4,5,5,5,6,6,6};

@@ -1,3 +1,5 @@
+package ZeeshanSir;
+
 public class Monotone {
     public static void main(String[] args) {
        int[] nums = {1,2,3,9,4,7,3,11,8,14,16,23,22}; 

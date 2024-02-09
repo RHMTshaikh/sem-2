@@ -1,3 +1,5 @@
+package ZeeshanSir;
+
 public class SumOfDigits{
     public static void main(String[] args) {
         int num = 123456789;

@@ -1,3 +1,5 @@
+package ZeeshanSir;
+
 //adding to check
 public class Merging {
     public static void main(String[] args) {

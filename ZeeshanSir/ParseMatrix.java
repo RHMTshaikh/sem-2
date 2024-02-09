@@ -1,8 +1,10 @@
+package ZeeshanSir;
+
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
 class LTM {
-    float[] matrix ;
+    double[] matrix ;
     int len;
     int n;
     // 1 0 0
@@ -11,48 +13,100 @@ class LTM {
     LTM(int n){
         this.n =n;
         len = n*(n+1)/2;
-        matrix = new float[len];
+        matrix = new double[len];
     
     }
     void read(){
+        System.out.println("Enter "+len+" elements.");
         Scanner scn = new Scanner(System.in);
         for (int i = 0; i < len; i++) {
-            matrix[i] = scn.nextFloat();
+            matrix[i] = scn.nextDouble();
         }
     }
     int map(int i, int j) {
         return i*(i+1)/2+j;
     }
     void display(){
-        DecimalFormat df = new DecimalFormat("#.##");
+        // DecimalFormat df = new Deci/malFormat("#.##");
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (i < j) {
-                    System.out.print(0.00+"  ");
+                    System.out.format("%1.2f\t",0.0);
                 } else{
-                    System.out.print(df.format(matrix[map(i,j)])+"  ");
+                    System.out.format("%1.2f\t",matrix[map(i,j)]);
                 }
             }System.out.println();
         }
     }
-    LTM multiply(DigonalMatrix m2) throws Exception{
-        if(len != m2.len) throw new Exception("Product not Possible! Invalid Dimensions");
-        LTM product = new LTM(len);
+
+    double determinant(){
+        double d =1;
+        for (int i = 0; i < n; i++) {
+            d *= matrix[map(i, i)];
+        }
+        return d;
+    }
+    LTM inverse() throws Exception{
+        if (this.determinant() == 0.0) throw new Exception("inverse: singular matrix");
+        
+        LTM duplicate = new LTM(len);
         for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-                for (int k =0; k < len; k++){
-                    product.matrix[product.map(i,j)] += matrix[map(i,k)] * m2.matrix[m2.map(k,j)];
+            duplicate.matrix[i] = matrix[i];
+        }
+        LTM invers = new LTM(n);
+        //converting to unit matrix
+        for (int i = 0; i < len; i++) {
+            for (int j = i; j >= 0; j--) {
+                if(i!=j) 
+                    invers.matrix[map(i, j)] = 0;
+                else 
+                    invers.matrix[map(i, j)] = 1;
+            }  
+        }
+        //making lower part 0
+        for (int i = 0; i < n-1; i++) {
+            double x = duplicate.matrix[map(i, i)];
+            for (int j = i+1; j < n; j++) {
+                double y = duplicate.matrix[map(j, i)];
+                for (int k = 0; k < n; k++) {
+                    duplicate.matrix[map(j, k)] = duplicate.matrix[map(j, k)]-duplicate.matrix[map(i, k)]*y/x;
+                    invers.matrix[map(j, k)] = invers.matrix[map(j, k)]-invers.matrix[map(i, k)]*y/x;
                 }
+            }
+        }
+        //making digonal 1
+        for (int i = 0; i < n; i++) {
+            double x = duplicate.matrix[map(i, i)];
+            for (int j = 0; j < n; j++) {
+                duplicate.matrix[map(i, j)] = duplicate.matrix[map(i, j)]/x;
+                invers.matrix[map(i, j)] = invers.matrix[map(i, j)]/x;
+            }
+        }
+        return invers;
+    }
+    LTM multiply(DigonalMatrix m2) throws Exception{
+        if(n != m2.n) throw new Exception("Product not Possible! Invalid Dimensions");
+        LTM product = new LTM(n);
+        for (int i = 0; i < len; i++) {
+            product.matrix[i] = 0;
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j <= i; j++) {
+                product.matrix[product.map(i,j)] += matrix[map(i,j)] * m2.matrix[j];
             }
         }
         return product;
     }
     LTM multiply(LTM m2) throws Exception{
         if(len != m2.len) throw new Exception("Product not Possible! Invalid Dimensions");
-        LTM product = new LTM(len);
+        LTM product = new LTM(n);
         for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-                for (int k =0; k < len; k++){
+            product.matrix[i] = 0;
+        }
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j <= i; j++) {
+                product.matrix[map(i, j)] = 0;
+                for (int k =j; k <= i; k++){
                     product.matrix[product.map(i,j)] += matrix[map(i,k)] * m2.matrix[m2.map(k,j)];
                 }
             }
@@ -60,11 +114,16 @@ class LTM {
         return product;
     }
     Matrix multiply(UTM m2) throws Exception{
-        if(len != m2.len) throw new Exception("Product not Possible! Invalid Dimensions");
-        Matrix product = new Matrix(len);
-        for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-                for (int k =0; k < len; k++){
+        if(n != m2.n) throw new Exception("Product not Possible! Invalid Dimensions");
+        Matrix product = new Matrix(n);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                product.matrix[i][j] = 0;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k =0; k <= i && k <= j; k++){
                     product.matrix[i][j] += matrix[map(i,k)] * m2.matrix[m2.map(k,j)];
                 }
             }
@@ -73,7 +132,7 @@ class LTM {
     }
 }
 class UTM {
-    float[] matrix ;
+    double[] matrix ;
     int len;
     int n;
     // 1 1 1
@@ -82,36 +141,84 @@ class UTM {
     UTM(int n){
         this.n =n;
         len = n*(n+1)/2;
-        matrix = new float[len];
+        matrix = new double[len];
     
     }
     void read(){
+        System.out.println("Enter "+len+" elements.");
         Scanner scn = new Scanner(System.in);
         for (int i = 0; i < len; i++) {
-            matrix[i] = scn.nextFloat();
+            matrix[i] = scn.nextDouble();
         }
     }
     int map(int i, int j) {
         return i*(2*n-i-1)/2+j;
     }
     void display(){
-        DecimalFormat df = new DecimalFormat("#.##");
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (i > j) {
-                    System.out.print(0+"  ");
+                    System.out.format("%1.2f\t",0.0);
                 } else{
-                    System.out.print(df.format(matrix[map(i,j)])+"  ");
+                    System.out.format("%1.2f\t",matrix[map(i,j)]);
                 }
             }System.out.println();
         }
     }
-    UTM multiply(DigonalMatrix m2) throws Exception{
-        if(len != m2.len) throw new Exception("Product not Possible! Invalid Dimensions");
-        UTM product = new UTM(len);
+    double determinant(){
+        double d =1;
+        for (int i = 0; i < matrix.length; i++) {
+            d *= matrix[map(i, i)];
+        }
+        return d;
+    }
+    LTM inverse() throws Exception{
+        if (this.determinant() == 0.0) throw new Exception("inverse: singular matrix");
+        
+        LTM duplicate = new LTM(n);
         for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-                for (int k =0; k < len; k++){
+            duplicate.matrix[i] = matrix[i];
+        }
+        LTM invers = new LTM(n);
+        //converting to unit matrix
+        for (int i = 0; i < len; i++) {
+            for (int j = i; j >= 0; j--) {
+                if(i!=j) 
+                    invers.matrix[map(i, j)] = 0;
+                else 
+                    invers.matrix[map(i, j)] = 1;
+            }  
+        }
+        //making upper part 0
+        for (int i = n-1; i > 0; i--) {
+            double x = duplicate.matrix[map(i, i)];
+            for (int j = i-1; j >= 0; j--) {
+                double y = duplicate.matrix[map(j, i)];
+                for (int k = n-1; k >= 0; k--) {
+                    duplicate.matrix[map(j, k)] -= duplicate.matrix[map(i, k)]*y/x;
+                    invers.matrix[map(j, k)] -= invers.matrix[map(i, k)]*y/x;
+                }
+            }
+        }
+        //making digonal 1
+        for (int i = 0; i < n; i++) {
+            double x = duplicate.matrix[map(i, i)];
+            for (int j = 0; j < n; j++) {
+                duplicate.matrix[map(i, j)] = duplicate.matrix[map(i, j)]/x;
+                invers.matrix[map(i, j)] = invers.matrix[map(i, j)]/x;
+            }
+        }
+        return invers;
+    }
+    UTM multiply(DigonalMatrix m2) throws Exception{
+        if(n != m2.n) throw new Exception("Product not Possible! Invalid Dimensions");
+        UTM product = new UTM(n);
+        for (int i = 0; i < len; i++) {
+            product.matrix[i] = 0;
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k =0; k < n; k++){
                     product.matrix[product.map(i,j)] += matrix[map(i,k)] * m2.matrix[m2.map(k,j)];
                 }
             }
@@ -119,11 +226,14 @@ class UTM {
         return product;
     }
     UTM multiply(UTM m2) throws Exception{
-        if(len != m2.len) throw new Exception("Product not Possible! Invalid Dimensions");
-        UTM product = new UTM(len);
+        if(n != m2.n) throw new Exception("Product not Possible! Invalid Dimensions");
+        UTM product = new UTM(n);
         for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-                for (int k =0; k < len; k++){
+            product.matrix[i] = 0;
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k =i; k <= j; k++){
                     product.matrix[product.map(i,j)] += matrix[map(i,k)] * m2.matrix[m2.map(k,j)];
                 }
             }
@@ -131,11 +241,16 @@ class UTM {
         return product;
     }
     Matrix multiply(LTM m2) throws Exception{
-        if(len != m2.len) throw new Exception("Product not Possible! Invalid Dimensions");
-        Matrix product = new Matrix(len);
-        for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-                for (int k =0; k < len; k++){
+        if(n != m2.n) throw new Exception("Product not Possible! Invalid Dimensions");
+        Matrix product = new Matrix(n);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                product.matrix[i][j] = 0;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = (i<j)?(j):(i); k < n; k++){
                     product.matrix[i][j] += matrix[map(i,k)] * m2.matrix[m2.map(k,j)];
                 }
             }
@@ -145,22 +260,23 @@ class UTM {
 }
 
 class DigonalMatrix {
-    float[] matrix ;
+    double[] matrix ;
     int len;
     int n;
-    // 1 1 1
-    // 0 1 1
+    // 1 0 0
+    // 0 1 0
     // 0 0 1
     DigonalMatrix(int n){
         this.n =n;
         len = n;
-        matrix = new float[len];
+        matrix = new double[len];
     
     }
     void read(){
+        System.out.println("Enter "+len+" elements.");
         Scanner scn = new Scanner(System.in);
         for (int i = 0; i < len; i++) {
-            matrix[i] = scn.nextFloat();
+            matrix[i] = scn.nextDouble();
         }
     }
     int map(int i, int j) {
@@ -171,54 +287,60 @@ class DigonalMatrix {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (i == j) {
-                    System.out.print(df.format(matrix[map(i,j)])+"  ");
+                    System.out.format("%1.2f\t",matrix[map(i,j)]);
                 } else{
-                    System.out.print(0.00+"  ");
+                    System.out.format("%1.2f\t",0.0);
                 }
             }System.out.println();
         }
     }
-    float determinant(){
-        float det =1;
+    double determinant(){
+        double det =1;
         for (int i = 0; i < len; i++) {
             det *= matrix[map(i, i)];
         }
         return det;
     }
     DigonalMatrix invers(){
-        DigonalMatrix invers = new DigonalMatrix(len);
+        DigonalMatrix invers = new DigonalMatrix(n);
         for (int i = 0; i < len; i++) {
             invers.matrix[i] =1/matrix[i];            
         }
         return invers;
     }
-    DigonalMatrix multiply(DigonalMatrix m2){
-        DigonalMatrix product = new DigonalMatrix(len);
+    DigonalMatrix multiply(DigonalMatrix m2) throws Exception{
+        if(n != m2.n) throw new Exception("Product not Possible! Invalid Dimensions");
+        DigonalMatrix product = new DigonalMatrix(n);
         for (int i = 0; i < len; i++) {
-            product.matrix[map(i,i)] = matrix[map(i,i)] * m2.matrix[map(i,i)];
+            product.matrix[i] = 0;
+        }
+        for (int i = 0; i < len; i++) {
+            product.matrix[i] = matrix[i] * m2.matrix[i];
         }
         return product;
     }
     LTM multiply(LTM m2) throws Exception{
-        if(len != m2.len) throw new Exception("Product not Possible! Invalid Dimensions");
-        LTM product = new LTM(len);
+        if(n != m2.n) throw new Exception("Product not Possible! Invalid Dimensions");
+        LTM product = new LTM(n);
         for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-                for (int k =0; k < len; k++){
-                    product.matrix[product.map(i,j)] += matrix[map(i,k)] * m2.matrix[m2.map(k,j)];
-                }
+            product.matrix[i] = 0;
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j <= i; j++) {
+                product.matrix[product.map(i,j)] += matrix[i] * m2.matrix[m2.map(i,j)];
             }
         }
         return product;
     }
     UTM multiply(UTM m2) throws Exception{
-        if(len != m2.len) throw new Exception("Product not Possible! Invalid Dimensions");
-        UTM product = new UTM(len);
+        if(n != m2.n) throw new Exception("Product not Possible! Invalid Dimensions");
+        UTM product = new UTM(n);
         for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-                for (int k =0; k < len; k++){
-                    product.matrix[product.map(i,j)] += matrix[map(i,k)] * m2.matrix[m2.map(k,j)];
-                }
+            product.matrix[i] = 0;
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                product.matrix[product.map(i,j)] += matrix[i] * m2.matrix[m2.map(i,j)];
             }
         }
         return product;
@@ -228,15 +350,25 @@ class DigonalMatrix {
 public class ParseMatrix {
     public static void main(String[] args) {
         try {
-            DigonalMatrix m =  new DigonalMatrix(4);
-            DigonalMatrix m2 =  new DigonalMatrix(4);
-            m.read();
-            m.invers().display();
-            // m2.read();
-            m.display();
-            m.multiply(m2).display();
-            System.out.println(m.determinant());
+            DigonalMatrix d1 =  new DigonalMatrix(3);
+            DigonalMatrix d2 =  new DigonalMatrix(3);
+            LTM l1 = new LTM(3);
+            LTM l2 = new LTM(3);
+            UTM u1 = new UTM(3);
+            UTM u2 = new UTM(3);
             
+            System.out.println("matrix1");
+            u1.read();
+            System.out.println("matrix2");
+            l2.read();
+            System.out.println("matrix1");
+            u1.display();
+            System.out.println("matrix2");
+            l2.display();
+            System.out.println("multiplication");
+            u1.multiply(l2).display();
+
+
         } catch (Exception e) {
             System.out.println(e);
         }
