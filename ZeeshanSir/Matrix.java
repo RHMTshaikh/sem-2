@@ -164,8 +164,6 @@ public class Matrix {
                 float y = dummy.matrix[j][i];
                 dummy.matrix[j][i] -= dummy.matrix[i][i]*y/x;
                 invers.matrix[j][i] -= invers.matrix[i][i]*y/x;
-                for (int k = rows-1; k >= 0; k--) {
-                }
             }
         }
         //making digonal 1
