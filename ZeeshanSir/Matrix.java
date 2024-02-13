@@ -1,11 +1,11 @@
-package ZeeshanSir;
+// package ZeeshanSir;
 
 import java.util.Random;
 import java.util.Scanner;
 //adding a comment to check
 
 public class Matrix {
-    double[][] matrix;
+    float[][] matrix;
     int rows;
     int columns;
 
@@ -14,7 +14,7 @@ public class Matrix {
         rows=n;
         columns = n;
         Random rdm = new Random();
-        matrix = new double [rows][columns];
+        matrix = new float [rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 matrix[i][j] = rdm.nextInt(9)+1;
@@ -26,7 +26,7 @@ public class Matrix {
         rows=r;
         columns = c;
         Random rdm = new Random();
-        matrix = new double [rows][columns];
+        matrix = new float [rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 matrix[i][j] = rdm.nextInt(9)+1;
@@ -37,7 +37,7 @@ public class Matrix {
         if(r < 1 || c <1) throw new Exception("dimension must be greater than zero");
         rows=r;
         columns = c;
-        matrix = new double[rows][columns];
+        matrix = new float[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 matrix[i][j] = constant;
@@ -49,7 +49,7 @@ public class Matrix {
         System.out.println("input "+ rows*columns + " numbers in the terminal");
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                matrix[i][j] = scn.nextDouble();
+                matrix[i][j] = scn.nextFloat();
             }
         }
     }
@@ -64,7 +64,7 @@ public class Matrix {
     void transpose() {
         for (int i = 0; i < rows-1; i++) {
             for (int j = i+1; j < columns; j++) {
-                double temp = matrix[i][j];
+                float temp = matrix[i][j];
                 matrix[i][j] = matrix[j][i];
                 matrix[j][i] = temp;
             }
@@ -104,7 +104,7 @@ public class Matrix {
         }
         return product;
     }
-    double determinant() throws Exception{
+    float determinant() throws Exception{
         if (columns != rows) throw new  Exception("not square matrix");
 
         Matrix UTM_matrix =  new Matrix(rows,columns,0);//made this to dont alter the original matrix
@@ -114,15 +114,15 @@ public class Matrix {
             }
         }
         for (int i = 0; i < rows-1; i++) {
-            double x = UTM_matrix.matrix[i][i];
+            float x = UTM_matrix.matrix[i][i];
             for (int j = i+1; j < rows; j++) {
-                double y = UTM_matrix.matrix[j][i];
+                float y = UTM_matrix.matrix[j][i];
                 for (int k = 0; k < rows; k++) {
                     UTM_matrix.matrix[j][k] = UTM_matrix.matrix[j][k]-UTM_matrix.matrix[i][k]*y/x;
                 }
             }
         }
-        double d =1;
+        float d =1;
         for (int i = 0; i < matrix.length; i++) {
             d *= UTM_matrix.matrix[i][i];
         }
@@ -132,10 +132,10 @@ public class Matrix {
         if (columns!=rows) throw new Exception("inverse: not squar matrix");
         if (this.determinant() == 0.0) throw new Exception("inverse: singular matrix");
         
-        Matrix duplicate = new Matrix(rows);
+        Matrix dummy = new Matrix(rows);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < rows; j++) {
-                duplicate.matrix[i][j] = matrix[i][j];
+                dummy.matrix[i][j] = matrix[i][j];
             }  
         }
         Matrix invers = new Matrix(rows);
@@ -148,31 +148,31 @@ public class Matrix {
         }
         //making lower part 0
         for (int i = 0; i < rows-1; i++) {
-            double x = duplicate.matrix[i][i];
+            float x = dummy.matrix[i][i];
             for (int j = i+1; j < rows; j++) {
-                double y = duplicate.matrix[j][i];
+                float y = dummy.matrix[j][i];
                 for (int k = 0; k < rows; k++) {
-                    duplicate.matrix[j][k] = duplicate.matrix[j][k]-duplicate.matrix[i][k]*y/x;
+                    dummy.matrix[j][k] = dummy.matrix[j][k]-dummy.matrix[i][k]*y/x;
                     invers.matrix[j][k] = invers.matrix[j][k]-invers.matrix[i][k]*y/x;
                 }
             }
         }
         //making upper part 0
         for (int i = rows-1; i > 0; i--) {
-            double x = duplicate.matrix[i][i];
+            float x = dummy.matrix[i][i];
             for (int j = i-1; j >= 0; j--) {
-                double y = duplicate.matrix[j][i];
+                float y = dummy.matrix[j][i];
+                dummy.matrix[j][i] -= dummy.matrix[i][i]*y/x;
+                invers.matrix[j][i] -= invers.matrix[i][i]*y/x;
                 for (int k = rows-1; k >= 0; k--) {
-                    duplicate.matrix[j][k] -= duplicate.matrix[i][k]*y/x;
-                    invers.matrix[j][k] -= invers.matrix[i][k]*y/x;
                 }
             }
         }
         //making digonal 1
         for (int i = 0; i < rows; i++) {
-            double x = duplicate.matrix[i][i];
+            float x = dummy.matrix[i][i];
             for (int j = 0; j < rows; j++) {
-                duplicate.matrix[i][j] = duplicate.matrix[i][j]/x;
+                dummy.matrix[i][j] = dummy.matrix[i][j]/x;
                 invers.matrix[i][j] = invers.matrix[i][j]/x;
             }
         }
@@ -180,7 +180,7 @@ public class Matrix {
     }
     void sumOFRows() {
         for (int i = 0; i < rows; i++) {
-            double sum = 0;
+            float sum = 0;
             for (int j = 0; j < columns; j++) {
                 sum += matrix[i][j];
             }
@@ -190,7 +190,7 @@ public class Matrix {
     }
     void sumOFColumns() {
         for (int i = 0; i < columns; i++) {
-            double sum = 0;
+            float sum = 0;
             for (int j = 0; j < rows; j++) {
                 sum += matrix[j][i];
             }
@@ -199,7 +199,7 @@ public class Matrix {
         System.out.println();
     }
     //in codespace 
-public static void main(String[] args) {
+    public static void main(String[] args) {
         try {
             Matrix m = new Matrix(3);
             Matrix m1 = new Matrix(3);
@@ -230,6 +230,7 @@ public static void main(String[] args) {
             m.display();
             m.read();
             m.display();
+            System.out.println(m.determinant());
  
         } catch (Exception e) {
             System.out.println(e);
