@@ -5,17 +5,9 @@ public class Partitioning {
         // int[] arr = {2,1,9,4,6,8,3,5,7,0};
         int[] arr = {2,8,3,8,1,7,6,1,4,6,8,1,2,0,1,2,0,1,2,0,0,0,9,7};
 
-        for (int i : partition1(arr, -10)) {
+        for (int i : partition1(arr, 0)) {
             System.out.print(i+" ");
         }
-        // System.out.println();
-        // for (int i : partition2(arr, 2)) {
-        //     System.out.print(i+" ");
-        // }
-        // System.out.println();
-        // for (int i : partition3(arr, 7)) {
-        //     System.out.print(i+" ");
-        // }
     }   
 
     public static int[] partition1(int[] nums, int val){ //how to solve it by computer
@@ -31,10 +23,10 @@ public class Partitioning {
             int t = arr[l];
             arr[l]=arr[u];
             arr[u]=t;
-            while (l<u && arr[l]<=val) {
+            while (arr[l]<=val) { // no need to check l < u
                 l++;
             }
-            while (l<u && arr[u]>val) {// u is the partition index
+            while (arr[u]>val) {// u is the partition index
                 u--;
             }
         }

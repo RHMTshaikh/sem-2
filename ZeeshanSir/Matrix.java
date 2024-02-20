@@ -1,4 +1,4 @@
-// package ZeeshanSir;
+package ZeeshanSir;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -56,7 +56,7 @@ public class Matrix {
     void display(){
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                System.out.print(matrix[i][j]+" ");
+                System.out.print(matrix[i][j]+"\t");
             }System.out.println();
         }
         
@@ -162,8 +162,10 @@ public class Matrix {
             float x = dummy.matrix[i][i];
             for (int j = i-1; j >= 0; j--) {
                 float y = dummy.matrix[j][i];
-                dummy.matrix[j][i] -= dummy.matrix[i][i]*y/x;
-                invers.matrix[j][i] -= invers.matrix[i][i]*y/x;
+                for (int k = 0; k < rows; k++) {
+                    dummy.matrix[j][k] -= dummy.matrix[i][k]*y/x;
+                    invers.matrix[j][k] -= invers.matrix[i][k]*y/x;
+                }
             }
         }
         //making digonal 1

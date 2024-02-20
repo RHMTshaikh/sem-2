@@ -172,7 +172,7 @@ public class DatabaseOperations extends Portal{
             // createTable(statement);
             menu(connection, statement);
         } catch (Exception e) {
-            // TODO: handle exception
+            
         }
     }
 }
