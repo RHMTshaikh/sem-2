@@ -1,12 +1,12 @@
 package simulations;
 import java.util.Random;
 
-public class FirstSimulation {
+public class Inventory {
     int stock=115, day=1, dueDate=0, unitsDue=0, estimatedStock=0, demand=0;
     float cost=0;
     void policy(int reorderPoint, int reorderQuantity){
         while (day <= 180) {
-            if(dueDate==day){
+            if(day==dueDate){
                 stock += unitsDue;
                 cost += unitsDue*(18);
                 unitsDue = 0;
@@ -48,7 +48,7 @@ public class FirstSimulation {
     public static void main(String[] args) {
         System.out.println("qqqq");
         for (int i = 0; i < 10; i++) {
-            new FirstSimulation().policy(125, 250);
+            new Inventory().policy(125, 250);
             
         }
     }

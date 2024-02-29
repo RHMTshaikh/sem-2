@@ -1,4 +1,4 @@
-package LearnJava;
+package ZeeshanSir;
 
 public class BinaryTree {
     int val, depth=0;
@@ -70,6 +70,7 @@ public class BinaryTree {
                     q.push(q.firstNode.element.leftNode);
                     q.push(q.firstNode.element.rightNode);
                 }
+                
                 if(q.firstNode.element != null){
                     System.out.print(q.firstNode.element.val);
                     q.pop();
@@ -93,7 +94,7 @@ public class BinaryTree {
         }
     }
     public static void main(String[] args) {
-        int[] arr1 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+        int[] arr1 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14};
         BinaryTree a = arraryToTree(arr1);
         a.display();
     }
