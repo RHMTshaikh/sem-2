@@ -12,13 +12,10 @@ public class SimpleLinkedList {
             this.data = a;
             this.next=nexNode;
         }
-        
     }
+
     private Node head;
 
-    SimpleLinkedList(){
-        this.head = null;
-    }
     public void addNode(int a){
         if(head==null){
             head=new Node(a);
@@ -151,6 +148,7 @@ public class SimpleLinkedList {
         SimpleLinkedList list1 = new SimpleLinkedList();
         SimpleLinkedList list2 = new SimpleLinkedList();
         SimpleLinkedList list3 = new SimpleLinkedList();
+        System.out.println(list1.head);
         // list.addNode(1);
         // list.addNode(2);
         // list.addNode(3);
@@ -175,70 +173,4 @@ public class SimpleLinkedList {
         addTwoList(list1,revLinkedList(list3)).displayList();
     }
 }
-
-// public class SimpleLinkedList {
-//     // Node class to represent elements in the linked list
-//     static class Node {
-//         int data;
-//         Node next;
-//         public Node(int data) {
-//             this.data = data;
-//             this.next = null;
-//         }
-//     }
-//     // Head of the linked list
-//     private Node head;
-//     private  static SimpleLinkedList smpl;
-//     // Constructor
-//     public SimpleLinkedList() {
-//         this.head = null;
-//     }
-//     // Method to add a new element to the linked list
-//     public void addNode(int data) {
-//         Node newNode = new Node(data);
-//         if (head == null) {
-//             head = newNode;
-//         } else {
-//             Node current = head;
-//             while (current.next != null) {
-//                 current = current.next;
-//             }
-//             current.next = newNode;
-//         }
-//     }
-//     // Method to display the elements of the linked list
-//     public void displayList() {
-//         Node current = head;
-//         while (current != null) {
-//             System.out.print(current.data + " ");
-//             current = current.next;
-//         }
-//         System.out.println();
-//     }
-
-//     public void addLinkedList(SimpleLinkedList l1,SimpleLinkedList l2,SimpleLinkedList l3){
-        
-//     }
-//     public static void main(String[] args) {
-//         // Creating a simple linked list
-//         SimpleLinkedList linkedList1 = new SimpleLinkedList();
-//         SimpleLinkedList linkedList2 = new SimpleLinkedList();
-//         SimpleLinkedList linkedList3 = new SimpleLinkedList();
-
-//         linkedList1.addNode(1);
-//         linkedList1.addNode(2);
-//         linkedList1.addNode(3);
-
-//         linkedList2.addNode(1);
-//         linkedList2.addNode(2);
-//         linkedList2.addNode(3);
-
-//         linkedList3.addNode(1);
-//         linkedList3.addNode(2);
-//         linkedList3.addNode(3);
-//         // Displaying the linked list
-//         System.out.println("Linked List elements:");
-//         linkedList1.displayList();
-//     }
-// }
 

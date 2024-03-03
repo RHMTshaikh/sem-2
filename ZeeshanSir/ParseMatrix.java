@@ -25,6 +25,7 @@ class LTM {
     }
     int map(int i, int j) {
         return i*(i+1)/2+j;
+        // return i*(2*n-i-1)/2+j; UTM
     }
     void display(){
         // DecimalFormat df = new Deci/malFormat("#.##");
@@ -68,7 +69,7 @@ class LTM {
             double x = duplicate.matrix[map(i, i)];
             for (int j = i+1; j < n; j++) {
                 double y = duplicate.matrix[map(j, i)];
-                for (int k = 0; k < n; k++) {
+                for (int k = 0; k < i+1; k++) {
                     duplicate.matrix[map(j, k)] = duplicate.matrix[map(j, k)]-duplicate.matrix[map(i, k)]*y/x;
                     invers.matrix[map(j, k)] = invers.matrix[map(j, k)]-invers.matrix[map(i, k)]*y/x;
                 }
