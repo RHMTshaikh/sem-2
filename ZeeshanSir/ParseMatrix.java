@@ -2,7 +2,7 @@ package ZeeshanSir;
 
 import java.text.DecimalFormat;
 import java.util.Scanner;
-
+//MARK: LTM
 class LTM {
     double[] matrix ;
     int len;
@@ -70,8 +70,8 @@ class LTM {
             for (int j = i+1; j < n; j++) {
                 double y = duplicate.matrix[map(j, i)];
                 for (int k = 0; k < i+1; k++) {
-                    duplicate.matrix[map(j, k)] = duplicate.matrix[map(j, k)]-duplicate.matrix[map(i, k)]*y/x;
-                    invers.matrix[map(j, k)] = invers.matrix[map(j, k)]-invers.matrix[map(i, k)]*y/x;
+                    duplicate.matrix[map(j, k)] -= duplicate.matrix[map(i, k)]*y/x;
+                    invers.matrix[map(j, k)]    -= invers.matrix[map(i, k)]*y/x;
                 }
             }
         }
@@ -101,9 +101,9 @@ class LTM {
     LTM multiply(LTM m2) throws Exception{
         if(len != m2.len) throw new Exception("Product not Possible! Invalid Dimensions");
         LTM product = new LTM(n);
-        for (int i = 0; i < len; i++) {
-            product.matrix[i] = 0;
-        }
+        // for (int i = 0; i < len; i++) {
+        //     product.matrix[i] = 0;
+        // }
         for (int i = 0; i < n; i++){
             for (int j = 0; j <= i; j++) {
                 product.matrix[map(i, j)] = 0;
@@ -132,6 +132,7 @@ class LTM {
         return product;
     }
 }
+//MARK: UTM
 class UTM {
     double[] matrix ;
     int len;
@@ -259,7 +260,7 @@ class UTM {
         return product;
     }
 }
-
+//MARK: DIAGONAL
 class DigonalMatrix {
     double[] matrix ;
     int len;
@@ -347,7 +348,7 @@ class DigonalMatrix {
         return product;
     }
 }
-
+//MARK:PSVM
 public class ParseMatrix {
     public static void main(String[] args) {
         try {

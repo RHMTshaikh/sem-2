@@ -7,7 +7,8 @@ public class MyLinkedList {
         int value;
         Node next;        
     }
-    private Node head;
+
+    private Node head;//value,next
 
     void create(int n){
         head = new Node();

@@ -1,82 +1,159 @@
 package ZeeshanSir;
 
-public class BinaryTree {
-    int val, depth=0;
-    BinaryTree  leftNode, rightNode;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class BinaryTree<T> {
+    T val;
+    int height=0;
+    BinaryTree<T>  leftNode, rightNode;
 
     BinaryTree(){}
 
-    BinaryTree(int val){
+    BinaryTree(T val){
         this.val = val;
     }
 
-    static void addLeftNode(BinaryTree currentNode, int val){
-        currentNode.leftNode = new BinaryTree(val);
+    void addLeftNode( T val){
+        this.leftNode = new BinaryTree<T>(val);
     }
-    static void addRightNode(BinaryTree currentNode, int val){
-        currentNode.rightNode = new BinaryTree(val);
+    void addRightNode( T val){
+        this.rightNode = new BinaryTree<T>(val);
     }
 
-    static BinaryTree arraryToTree(int[] arr){
+    static <T> BinaryTree<T> arraryToTree(T[] arr){
         if (arr.length ==0) {
-            BinaryTree b = new BinaryTree();
+            BinaryTree<T> b = new BinaryTree<T>();
             return b;
         }
         else if (arr.length == 1){
-            BinaryTree b = new BinaryTree(arr[0]);
-            b.depth++;
+            BinaryTree<T> b = new BinaryTree<T>(arr[0]);
+            b.height++;
             return b;
         } else{
             int l = 0, u = arr.length-1;
             int mid = l + (u-l)/2;
-            BinaryTree b = new BinaryTree(arr[mid]);
-            b.depth = (int) Math.ceil(Math.log(arr.length+1)/Math.log(2));
+            BinaryTree<T> b = new BinaryTree<T>(arr[mid]);
+            b.height = (int) Math.ceil(Math.log(arr.length+1)/Math.log(2));
             b.leftNode = arraryToTree(arr, l, mid-1);
             b.rightNode = arraryToTree(arr, mid+1, u);
             return b;
         }
         
     }
-    static BinaryTree arraryToTree(int[] arr, int l, int u){
+    static<T> BinaryTree<T> arraryToTree(T[] arr, int l, int u){
         if (u < l) {
             return null;
         }
         if (l == u) {
-            BinaryTree b = new BinaryTree(arr[l]);
+            BinaryTree<T> b = new BinaryTree<T>(arr[l]);
             return b;
         }
         int mid = l + (u-l)/2;
-        BinaryTree b = new BinaryTree(arr[mid]);
+        BinaryTree<T> b = new BinaryTree<T>(arr[mid]);
         b.leftNode = arraryToTree(arr, l, mid-1);
         b.rightNode = arraryToTree(arr, mid+1, u);
         return b;         
     }
+    static<T> T[] treeToArrayUsingQueueLevelOrder(BinaryTree<T> root){
+        if (root == null) {
+            return null;            
+        }
+        // T[] array = new T[ (int)(Math.pow(2,root.height)-1)];
+        // @SuppressWarnings("unchecked")
+        // T[] array = (T[]) new Object[(int) (Math.pow(2, root.height) - 1)];
+
+        @SuppressWarnings("unchecked")
+        T[] array = (T[]) Array.newInstance(root.val.getClass(), (int) (Math.pow(2, root.height) - 1));
+
+        int index =0;
+        
+        Queue<BinaryTree<T>> queue = new LinkedList<>(); //add poll peek
+        queue.add(root);
+        return treeToArrayUsingQueueLevelOrder(queue, array, index);
+    }
+    static <T> T[] treeToArrayUsingQueueLevelOrder(Queue<BinaryTree<T>> queue, T[] array, int index){
+        if (queue.peek() == null) {
+            return array;
+        }
+        BinaryTree<T> currNode = queue.poll();
+        
+        array[index++] = currNode.val;
+        
+        if (currNode.leftNode != null) {
+            queue.add(currNode.leftNode);
+        }
+        if (currNode.rightNode != null) {
+            queue.add(currNode.rightNode);
+        }
+        return treeToArrayUsingQueueLevelOrder(queue, array, index);
+    }
+    static Integer evaluateExpressionTree(BinaryTree<Character> root){
+        if (root == null) {
+            return null;            
+        }
+        if (0 <= root.leftNode.val -'0') {
+            switch (root.val) {
+                case '+':
+                    return ((root.leftNode.val)-'0') + ((root.rightNode.val)-'0');
+                    
+                case '-':
+                    return ((root.leftNode.val)-'0') - ((root.rightNode.val)-'0');
+                    
+                    
+                case '*':
+                    return ((root.leftNode.val)-'0') * ((root.rightNode.val)-'0');
+                    
+                    
+                case '/':
+                    return ((root.leftNode.val)-'0') / ((root.rightNode.val)-'0');
+            }
+        }
+        switch (root.val) {
+            case '+':
+                return evaluateExpressionTree(root.leftNode) + evaluateExpressionTree(root.rightNode);
+                
+            case '-':
+                return evaluateExpressionTree(root.leftNode) - evaluateExpressionTree(root.rightNode);
+                
+                
+            case '*':
+                return evaluateExpressionTree(root.leftNode) * evaluateExpressionTree(root.rightNode);
+                
+                
+            case '/':
+                return evaluateExpressionTree(root.leftNode) / evaluateExpressionTree(root.rightNode);
+        }
+        return null;
+    }
     void display(){
-        int width = (int) Math.pow(2,depth-1)*2-1;
+        int width = (int) Math.pow(2,height-1)*2-1;
         int level =1;
         int numberOfSideSpaces = width/2;
         int numberOfMiddleSpaces = 0;
-        MyQueue q = new MyQueue();
-        q.push(this);
+        Queue<BinaryTree<T>> q = new LinkedList<>();
+        q.add(this);
         
-        while (level <= depth) {
+        while (level <= height) {
             int numOfNodes = (int) Math.pow(2,level-1);
             
             String dashes = "_".repeat(numberOfSideSpaces);
             System.out.print(dashes);
             
             for (int i = 0; i < numOfNodes; i++) {
-                if (q.firstNode.element != null) {
-                    q.push(q.firstNode.element.leftNode);
-                    q.push(q.firstNode.element.rightNode);
+                if (q.peek() != null) {
+                    q.add(q.peek().leftNode);
+                    q.add(q.peek().rightNode);
                 }
                 
-                if(q.firstNode.element != null){
-                    System.out.print(q.firstNode.element.val);
-                    q.pop();
+                if(q.peek() != null){
+                    System.out.print(q.poll().val);
+                    // q.pop();
                 } else{
                     System.out.print("*");
-                    q.pop();
+                    q.poll();
                 }
                 dashes = "_".repeat(numberOfMiddleSpaces);
                 if (i != numOfNodes-1) {
@@ -94,34 +171,28 @@ public class BinaryTree {
         }
     }
     public static void main(String[] args) {
-        int[] arr1 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14};
-        BinaryTree a = arraryToTree(arr1);
-        a.display();
-    }
-}
+        // Integer[] arr1 ={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
+        // BinaryTree<Integer> a = arraryToTree(arr1);
+        // a.display();
+        // Integer[] arr2 = treeToArrayUsingQueueLevelOrder(a);
+        // System.out.println("Level Order");
+        // System.out.println(Arrays.toString(arr2));
+        BinaryTree<Character> expressionTree = new BinaryTree<>('/');
+        expressionTree.addRightNode( '-');
+        expressionTree.rightNode.addLeftNode( '9');
+        expressionTree.rightNode.addRightNode( '4');
+        expressionTree.addLeftNode( '*');
+        expressionTree.leftNode.addLeftNode( '+');
+        expressionTree.leftNode.addRightNode( '-');
+        expressionTree.leftNode.rightNode.addLeftNode( '7');
+        expressionTree.leftNode.rightNode.addRightNode( '2');
+        expressionTree.leftNode.leftNode.addLeftNode( '9');
+        expressionTree.leftNode.leftNode.addRightNode( '4');
 
-class MyQueue{
-    Node firstNode, lastNode;
-    class Node{
-        BinaryTree element;
-        Node next;
-    }
-    void push(BinaryTree element){
-        if (lastNode == null) {
-            this.lastNode = new Node();
-            this.lastNode.element = element;
-            firstNode = new Node();
-            firstNode = lastNode;
-        }else{
-            this.lastNode.next = new Node();
-            this.lastNode = lastNode.next;
-            this.lastNode.element = element;
-        }
-    }
-    BinaryTree pop(){
-        Node head = firstNode;
-        firstNode = firstNode.next;
+        int result = evaluateExpressionTree(expressionTree);
+        System.out.println(result);
 
-        return head.element;
+        Character c = '/';
+        System.out.println((c-'0'));
     }
 }

@@ -5,13 +5,12 @@ public class Sorting {
         int[] array = {9,0,0,8, 5,4,4,4,4,9,9,9,2,2,2,4,8,3,-17,9,3,8,48,2,4, 12, 7,0};
         int[] array1 = {1,3,5,9,10,55,88};
         int[] array2 = {2,3,5,7,8};
-        int arrLength = array.length;
 
-        // System.out.println("merge sorted array sort");
-        // for (int i : mergeSortedArray(array1,array2)) {
-        //     System.out.print(i+" ");
+        System.out.println("merge sorted array sort");
+        for (int i : mergeSortedArray(array1,array2)) {
+            System.out.print(i+" ");
             
-        // }System.out.println();
+        }System.out.println();
         
         System.out.println("Bubble sort");
         for (int i : bubbleSort(array)) {
@@ -28,15 +27,32 @@ public class Sorting {
         System.out.println("Insertion sort");
         for (int i : insertionSort(array)) {
             System.out.print(i+" ");
+
         }System.out.println();
 
         System.out.println("Qqick sort");
-        for (int i : quickSort(array, 0,arrLength-1)) {
+        for (int i : quickSort(array, 0,array.length-1)) {
+            System.out.print(i+" ");
+            
+        }System.out.println();
+
+        System.out.println("Merge sort");
+        for (int i : mergeSort(array,0, array.length-1)) {
             System.out.print(i+" ");
             
         }System.out.println();
 
     }
+
+    public static int[] mergeSort(int[] array, int s, int e){
+        if (s == e) {
+            return new int[]{array[s]};
+        }
+        int[] arr = array;
+        int mid = s+(e-s)/2;
+        return mergeSortedArray(mergeSort(arr, s, mid), mergeSort(arr, mid+1, e));
+    }
+
 
     public static int[] mergeSortedArray(int[] arr1, int[] arr2){
         int[] arr3 = new int[arr1.length+arr2.length];

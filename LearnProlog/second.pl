@@ -1,4 +1,4 @@
-% :-use_module(library(clpfd)).
+:-use_module(library(clpfd)).
 
 puzzle([S,E,N,D] + [M,O,R,E] = [M,O,N,E,Y]) :-
 Vars = [S,E,N,D,M,O,R,Y],
